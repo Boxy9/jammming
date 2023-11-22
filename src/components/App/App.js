@@ -10,6 +10,7 @@ const App = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [playlistName, setPlaylistName] = useState("New Playlist");
   const [playlistTracks, setPlaylistTracks] = useState([]);
+  const [trk, setTrk] = useState({})
 
   const search = useCallback((term) => {
     Spotify.search(term).then(setSearchResults);
@@ -45,6 +46,30 @@ const App = () => {
     };
   }, [playlistName, playlistTracks]);
 
+  const PlayTrack = useCallback((track) => {
+    let frame ="";
+    if (typeof track.id === "undefined") {
+      track = {
+        name: "Never Gonna Give You Up",
+        id: "4cOdK2wGLETKBW3PvgPWqT"
+      }
+    };
+    
+    frame = (
+      <div>
+        <iframe
+          title={`Spotify Embed: ${track.name}`}
+          src={`https://open.spotify.com/embed/track/${track.id}?utm_source=generator&theme=0`}
+          width="100%"
+          height="100%"
+          style={{ border: "0" }}
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy" />
+      </div>
+    );
+    return frame;
+  }, []);
+
   return (
     <div>
       <h1>
@@ -53,15 +78,17 @@ const App = () => {
       <div className="App">
         <SearchBar onSearch={search} />
         <div className="App-playlist">
-          <SearchResults searchResults={searchResults} onAdd={addTrack} />
+          <SearchResults searchResults={searchResults} onAdd={addTrack} PlayTrack={PlayTrack} />
           <Playlist
             playlistName={playlistName}
             playlistTracks={playlistTracks}
             onNameChange={updatePlaylistName}
             onRemove={removeTrack}
             onSave={savePlaylist}
+            PlayTrack={PlayTrack}
           />
         </div>
+        <PlayTrack />
       </div>
     </div>
   );

@@ -14,11 +14,12 @@ const Playlist = (props) => {
 
   return (
     <div className="Playlist">
-      <input onChange={handleNameChange} defaultValue={"New Playlist"} />
+      <input id="playlist" onChange={handleNameChange} defaultValue={"New Playlist"} />
       <TrackList
         tracks={props.playlistTracks}
         isRemoval={true}
         onRemove={props.onRemove}
+        PlayTrack={props.PlayTrack}
       />
       <button className="Playlist-save" onClick={props.onSave}>
         SAVE TO SPOTIFY

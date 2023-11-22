@@ -17,18 +17,35 @@ const Track = (props) => {
     [props.onRemove, props.track]
   );
 
+  const PlayTrack = useCallback(
+    (event) => {
+      props.PlayTrack(props.track);
+    },
+    [props.PlayTrack, props.track]
+  );
+
   const renderAction = () => {
     if (props.isRemoval) {
       return (
-        <button className="Track-action" onClick={removeTrack}>
-          -
-        </button>
+        <div>
+          <button className="Track-action" onClick={removeTrack}>
+            -
+          </button>
+          <button className="Track-action" onClick={PlayTrack}>
+            Play
+          </button>
+        </div>
       );
     }
     return (
-      <button className="Track-action" onClick={addTrack}>
-        +
-      </button>
+      <div>
+        <button className="Track-action" onClick={addTrack}>
+          +
+        </button>
+        <button className="Track-action" onClick={PlayTrack}>
+          Play
+        </button>
+      </div>
     );
   };
 
