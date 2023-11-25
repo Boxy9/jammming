@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, Component } from "react";
 import "./App.css";
 
 import Playlist from "../Playlist/Playlist";
@@ -10,7 +10,7 @@ const App = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [playlistName, setPlaylistName] = useState("New Playlist");
   const [playlistTracks, setPlaylistTracks] = useState([]);
-  const [trk, setTrk] = useState({})
+  
 
   const search = useCallback((term) => {
     Spotify.search(term).then(setSearchResults);
@@ -47,7 +47,7 @@ const App = () => {
   }, [playlistName, playlistTracks]);
 
   const PlayTrack = useCallback((track) => {
-    let frame ="";
+    
     if (typeof track.id === "undefined") {
       track = {
         name: "Never Gonna Give You Up",
@@ -55,7 +55,7 @@ const App = () => {
       }
     };
     
-    frame = (
+    let frame = (
       <div>
         <iframe
           title={`Spotify Embed: ${track.name}`}
