@@ -17,47 +17,39 @@ const Track = (props) => {
     [props.onRemove, props.track]
   );
 
-  const PlayTrack = useCallback(
-    (event) => {
-      props.PlayTrack(props.track);
-    },
-    [props.PlayTrack, props.track]
-  );
-
   const renderAction = () => {
     if (props.isRemoval) {
       return (
-        <div>
-          <button className="Track-action" onClick={removeTrack}>
-            -
-          </button>
-          <button className="Track-action" onClick={PlayTrack}>
-            Play
-          </button>
-        </div>
+        <button className="Track-action" onClick={removeTrack}>Remove from Playlist
+        </button>
       );
     }
-    return (
-      <div>
-        <button className="Track-action" onClick={addTrack}>
-          +
+    else {
+      return (
+        <button className="Track-action" onClick={addTrack}>Add to Playlist
         </button>
-        <button className="Track-action" onClick={PlayTrack}>
-          Play
-        </button>
-      </div>
+      );
+    }
+  };
+
+  const playTrack = () => {
+
+    let frame = (
+      <iframe className="Track-information"
+        title={`Spotify Embed: ${props.track.name}`}
+        src={`https://open.spotify.com/embed/track/${props.track.id}?utm_source=generator&theme=0`}
+        width="100%"
+        height="80px"
+        style={{ Border: '0px' }}
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy" />
     );
+    return frame;
   };
 
   return (
     <div className="Track">
-      <div className="Track-information">
-        <h3>{props.track.name}</h3>
-        <p>
-          {props.track.artist} | {props.track.album}
-        </p>
-      </div>
-      {renderAction()}
+      {playTrack()}{renderAction()}
     </div>
   );
 };

@@ -22,13 +22,13 @@ const Spotify = {
     }
   },
 
-  search(term) {
+  async search(term) {
     const accessToken = Spotify.getAccessToken();
-    return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}&include_external="audio"`, {
+    return await fetch(`https://api.spotify.com/v1/search?type=track&q=${term}&include_external="audio"`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
-    }).then(response => {
+    }).then (response => {
       return response.json();
     }).then(jsonResponse => {
       if (!jsonResponse.tracks) {
@@ -44,7 +44,7 @@ const Spotify = {
     });
   },
 
-  savePlaylist(name, trackUris) {
+  async savePlaylist(name, trackUris) {
     if (!name || !trackUris.length) {
       return;
     }
@@ -53,7 +53,7 @@ const Spotify = {
     const headers = { Authorization: `Bearer ${accessToken}` };
     let userId;
 
-    return fetch('https://api.spotify.com/v1/me', { headers: headers }
+    return await fetch('https://api.spotify.com/v1/me', { headers: headers }
     ).then(response => response.json()
     ).then(jsonResponse => {
       userId = jsonResponse.id;

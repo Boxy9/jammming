@@ -15,7 +15,6 @@ const TrackList = (props) => {
             onAdd={props.onAdd}
             isRemoval={props.isRemoval}
             onRemove={props.onRemove}
-            PlayTrack={props.PlayTrack}
           />
         );
       })}
